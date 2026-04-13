@@ -1,4 +1,19 @@
-# TODO (Dani - Issue 7): Define imagen Python, instala librerías de procesamiento, copia tu script y define el CMD.
-FROM python:3.12-slim
+FROM python:3.11-slim
+
 WORKDIR /app
-CMD ["python", "-c", "print('Procesador scaffold listo')"]
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app ./app
+
+RUN mkdir -p /app/data/input /app/output
+
+CMD ["python", "app/main.py"]

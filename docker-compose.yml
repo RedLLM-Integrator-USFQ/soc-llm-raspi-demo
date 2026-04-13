@@ -8,7 +8,15 @@ services:
     # TODO (Alejo - Issue 4): Configurar el puerto 8000 y variables de entorno para FastAPI
 
   procesador:
-    # TODO (Dani - Issue 7): Configurar el build context hacia /procesador
+    build:
+      context: ./procesador
+    container_name: capacitasoc-procesador
+    restart: unless-stopped
+    volumes:
+      - ./procesador/data:/app/data
+      - ./procesador/output:/app/output
+    networks:
+      - red_privada
 
   qdrant:
     # TODO (Bri - Issue 6): Configurar la imagen oficial de Qdrant y el mapeo de volúmenes
@@ -24,6 +32,5 @@ services:
 networks:
   red_publica:
   red_privada:
-
 volumes:
   qdrant_data:
