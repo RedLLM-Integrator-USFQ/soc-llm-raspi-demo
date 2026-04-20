@@ -3,10 +3,18 @@ version: "3.9"
 services:
   frontend:
     # TODO (Vai - Issue 3): Configurar el puerto web y el build context hacia /frontend
+    build:
+      context: ./frontend
+    container_name: capacitasoc-frontend
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
+    networks:
+      - red_publica
 
   api:
     # TODO (Alejo - Issue 4): Configurar el puerto 8000 y variables de entorno para FastAPI
-
+    
   procesador:
     build:
       context: ./procesador
@@ -20,15 +28,13 @@ services:
 
   qdrant:
     # TODO (Bri - Issue 6): Configurar la imagen oficial de Qdrant y el mapeo de volúmenes
-
   # ---------------------------------------------------
   # INFRAESTRUCTURA SOC (Wazuh / Suricata)
   # ---------------------------------------------------
-  # TODO (Felipe - Spike Sprint 1): La integración de estas 
-  # herramientas está en pausa y siendo evaluada en una rama 
-  # aislada debido a su alto consumo de RAM (Min 4GB requeridos). 
+  # TODO (Felipe - Spike Sprint 1): La integración de estas
+  # herramientas está en pausa y siendo evaluada en una rama
+  # aislada debido a su alto consumo de RAM (Min 4GB requeridos).
   # Se integrarán en el Sprint 2 tras la prueba de estrés.
-
 networks:
   red_publica:
   red_privada:
