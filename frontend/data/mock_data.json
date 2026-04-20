@@ -1,0 +1,64 @@
+{
+  "kpis": {
+    "amenazas_activas": { "value": 47, "delta": "+12 última hora", "trend": "up" },
+    "incidentes_abiertos": { "value": 23, "delta": "+5 pendientes", "trend": "up" },
+    "mtta_min": { "value": 4.2, "delta": "-1.1 min vs ayer", "trend": "down" },
+    "mttr_min": { "value": 38, "delta": "+6 min vs ayer", "trend": "up" }
+  },
+  "amenazas_por_severidad": {
+    "Crítica": 14,
+    "Alta": 18,
+    "Media": 11,
+    "Baja": 4
+  },
+  "incidentes": [
+    { "id": "#INC-441", "tipo": "Ransomware",  "estado": "Investigando", "prioridad": "Crítica" },
+    { "id": "#INC-440", "tipo": "Phishing",    "estado": "Abierto",      "prioridad": "Alta"    },
+    { "id": "#INC-439", "tipo": "Brute force", "estado": "Investigando", "prioridad": "Alta"    },
+    { "id": "#INC-437", "tipo": "DDoS",        "estado": "Resuelto",     "prioridad": "Media"   },
+    { "id": "#INC-436", "tipo": "Exfiltración","estado": "Investigando", "prioridad": "Crítica" }
+  ],
+  "tecnicas_ataque": [
+    { "nombre": "Phishing",            "count": 342 },
+    { "nombre": "Brute force",         "count": 281 },
+    { "nombre": "Movimiento lateral",  "count": 214 },
+    { "nombre": "SQL Injection",       "count": 156 },
+    { "nombre": "Port scanning",       "count": 108 },
+    { "nombre": "C2 callback",         "count": 69  }
+  ],
+  "volumen_red": {
+    "horas":  ["09:00","10:00","11:00","12:00","13:00","14:00"],
+    "eventos": [100, 340, 210, 580, 400, 740]
+  },
+  "usuarios_anomalos": [
+    { "user": "j.morales@corp", "riesgo": 94 },
+    { "user": "a.chen@corp",    "riesgo": 87 },
+    { "user": "t.kumar@corp",   "riesgo": 63 },
+    { "user": "r.smith@corp",   "riesgo": 51 },
+    { "user": "l.torres@corp",  "riesgo": 28 }
+  ],
+  "endpoints": {
+    "Protegidos":    1240,
+    "Sin parche":     348,
+    "Comprometidos":   12
+  },
+  "malware": [
+    { "nombre": "AgentTesla",     "hosts": 23 },
+    { "nombre": "RedLine Stealer","hosts": 14 },
+    { "nombre": "Cobalt Strike",  "hosts": 8  }
+  ],
+  "cumplimiento": [
+    { "framework": "PCI-DSS",  "pct": 92 },
+    { "framework": "ISO 27001","pct": 87 },
+    { "framework": "GDPR",     "pct": 79 },
+    { "framework": "HIPAA",    "pct": 65 },
+    { "framework": "NIST CSF", "pct": 88 }
+  ],
+  "timeline": [
+    { "hora": "14:32", "sev": "critica", "titulo": "Ransomware detectado — endpoint WKS-0041 (Finanzas)",          "detalle": "EDR · Severidad crítica · Conteniendo..." },
+    { "hora": "14:18", "sev": "alta",    "titulo": "Brute force SSH — IP 185.234.21.9 bloqueada",                  "detalle": "Firewall · 847 intentos en 3 min · Bloqueado" },
+    { "hora": "13:55", "sev": "alta",    "titulo": "Exfiltración potencial — j.morales transfirió 4.2 GB",         "detalle": "DLP · Destino: IP externa no categorizada" },
+    { "hora": "13:41", "sev": "media",   "titulo": "Login anómalo — a.chen desde Ghana (fuera de horario)",        "detalle": "IAM · Nueva geolocalización · MFA solicitado" },
+    { "hora": "13:12", "sev": "baja",    "titulo": "DDoS mitigado — 2.3M pps absorbidos, servicio restaurado",     "detalle": "WAF/CDN · Duración: 11 min · Resuelto" }
+  ]
+}

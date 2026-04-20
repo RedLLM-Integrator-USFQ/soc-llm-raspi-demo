@@ -1,4 +1,15 @@
-# TODO (Vai - Issue 3): Define la imagen base, copia tu código del dashboard, instala dependencias y expón el puerto de tu UI.
-FROM alpine:3.20
+FROM python:3.11-slim
+
 WORKDIR /app
-CMD ["sh", "-c", "echo Frontend scaffold listo; sleep infinity"]
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8501
+ENV STREAMLIT_SERVER_PORT=8501 \
+    STREAMLIT_SERVER_ADDRESS=0.0.0.0 \
+    STREAMLIT_SERVER_HEADLESS=true \
+    STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+
+CMD ["streamlit", "run", "Login.py"]
