@@ -14,7 +14,7 @@ services:
 
   api:
     # TODO (Alejo - Issue 4): Configurar el puerto 8000 y variables de entorno para FastAPI
-    
+    image: hello-world
   procesador:
     build:
       context: ./procesador
@@ -25,9 +25,9 @@ services:
       - ./procesador/output:/app/output
     networks:
       - red_privada
-
   qdrant:
     # TODO (Bri - Issue 6): Configurar la imagen oficial de Qdrant y el mapeo de volúmenes
+    image: hello-world
   # ---------------------------------------------------
   # INFRAESTRUCTURA SOC (Wazuh / Suricata)
   # ---------------------------------------------------
@@ -38,5 +38,7 @@ services:
 networks:
   red_publica:
   red_privada:
+
+
 volumes:
   qdrant_data:
