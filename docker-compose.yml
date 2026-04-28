@@ -3,9 +3,11 @@ version: "3.9"
 services:
   frontend:
     # TODO (Vai - Issue 3): Configurar el puerto web y el build context hacia /frontend
+    image: hello-world
 
   api:
     # TODO (Alejo - Issue 4): Configurar el puerto 8000 y variables de entorno para FastAPI
+    image: hello-world
 
   procesador:
     build:
@@ -17,9 +19,9 @@ services:
       - ./procesador/output:/app/output
     networks:
       - red_privada
-
   qdrant:
     # TODO (Bri - Issue 6): Configurar la imagen oficial de Qdrant y el mapeo de volúmenes
+    image: hello-world
 
   # ---------------------------------------------------
   # INFRAESTRUCTURA SOC (Wazuh / Suricata)
@@ -32,5 +34,7 @@ services:
 networks:
   red_publica:
   red_privada:
+
+
 volumes:
   qdrant_data:
