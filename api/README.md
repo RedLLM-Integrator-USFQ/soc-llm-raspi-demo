@@ -3,6 +3,7 @@
 Proyecto con 2 servicios:
 - `ollama`: servidor de modelos LLM
 - `api`: API en FastAPI que consume Ollama
+ - `qdrant`: base vectorial externa (otra Raspberry)
 
 ## Requisitos
 - Docker
@@ -57,6 +58,28 @@ curl -X POST http://localhost:8000/generate \
     "stream": false
   }'
 ```
+
+### 5) Consultar con LlamaIndex (Qdrant + Ollama)
+
+Esta ruta realiza el flujo Query -> Retrieval -> Generation usando LlamaIndex.
+
+```bash
+curl -X POST http://localhost:8000/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query":"Explica la alerta de acceso anomalo",
+    "top_k": 5
+  }'
+```
+
+## Variables de entorno
+
+- `OLLAMA_URL` (default `http://ollama:11434`)
+- `OLLAMA_MODEL` (default `gemma:4`)
+- `OLLAMA_EMBED_MODEL` (default `nomic-embed-text`)
+- `QDRANT_URL` (sin default, apunta a la Raspberry de Qdrant)
+- `QDRANT_COLLECTION` (default `security_context`)
+- `RETRIEVAL_TOP_K` (default `5`)
 
 ## Alternativa para descargar modelos directo en el contenedor de Ollama
 
