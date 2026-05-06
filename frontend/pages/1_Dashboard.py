@@ -14,26 +14,38 @@ from components.chart_donut import render_donut
 st.set_page_config(page_title="SOC Security Dashboard", page_icon="📊", layout="wide")
 st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
-DATA_PATH = Path(__file__).parent.parent / "data" / "mock_data.json"
+MOCK_PATH = Path(__file__).parent.parent / "data" / "mock_data.json"
+# live_data.json es generado por el procesador con datos reales de eve.json
+LIVE_PATH = Path(__file__).parent.parent.parent / "procesador" / "output" / "live_data.json"
 
-@st.cache_data
-def load_data():
-    with open(DATA_PATH) as f:
-        return json.load(f)
 
-d = load_data()
+@st.cache_data(ttl=30)  # refresca cada 30s para capturar nuevos logs
+def load_data() -> tuple[dict, bool]:
+    """Carga live_data.json si existe; si no, cae en mock_data.json."""
+    if LIVE_PATH.exists():
+        with open(LIVE_PATH) as f:
+            return json.load(f), True   # True = datos reales
+    with open(MOCK_PATH) as f:
+        return json.load(f), False
+
+
+with st.spinner("⏳ Cargando datos del procesador..."):
+    d, is_live = load_data()
 
 # HEADER
-c1, c2 = st.columns([8, 1])
+c1, c2, c3 = st.columns([6, 1, 1])
 with c1:
     st.markdown("## SOC Security Dashboard")
 with c2:
+    source_label = "🟢 LIVE" if is_live else "🟡 DEMO"
+    source_help  = "Datos reales de eve.json" if is_live else "Datos de demostración (mock_data.json)"
     st.markdown(
-        '<div style="padding-top:8px">'
-        '<div class="live-badge"><div class="live-dot"></div>LIVE</div>'
-        '</div>',
+        f'<div style="padding-top:8px"><div class="live-badge" title="{source_help}">'
+        f'<div class="live-dot"></div>{source_label}</div></div>',
         unsafe_allow_html=True,
     )
+with c3:
+    pass
 
 # KPIs
 st.markdown('<div class="sec">Resumen Operacional</div>', unsafe_allow_html=True)
@@ -62,7 +74,7 @@ col_dona, col_inc = st.columns(2)
 
 with col_dona:
     st.markdown('<div class="panel">', unsafe_allow_html=True)
-    st.markdown("**Amenazas por severidad**")
+    st.markdown("Amenazas por severidad")
     render_donut(d["amenazas_por_severidad"])
     st.markdown('</div>', unsafe_allow_html=True)
 
