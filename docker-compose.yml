@@ -15,6 +15,7 @@ services:
   api:
     # TODO (Alejo - Issue 4): Configurar el puerto 8000 y variables de entorno para FastAPI
     image: hello-world
+
   procesador:
     build:
       context: ./procesador
@@ -25,9 +26,19 @@ services:
       - ./procesador/output:/app/output
     networks:
       - red_privada
+
   qdrant:
     # TODO (Bri - Issue 6): Configurar la imagen oficial de Qdrant y el mapeo de volúmenes
-    image: hello-world
+    image: qdrant/qdrant:latest
+    container_name: capacitasoc-qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - red_privada
+    restart: unless-stopped
+
   # ---------------------------------------------------
   # INFRAESTRUCTURA SOC (Wazuh / Suricata)
   # ---------------------------------------------------
@@ -35,10 +46,10 @@ services:
   # herramientas está en pausa y siendo evaluada en una rama
   # aislada debido a su alto consumo de RAM (Min 4GB requeridos).
   # Se integrarán en el Sprint 2 tras la prueba de estrés.
+
 networks:
   red_publica:
   red_privada:
-
 
 volumes:
   qdrant_data:

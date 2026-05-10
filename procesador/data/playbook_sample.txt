@@ -1,0 +1,21 @@
+PLAYBOOK-001: Respuesta a Escaneo de Puertos
+Táctica MITRE: TA0043 - Reconnaissance
+Técnica: T1046 - Network Service Discovery
+Descripción: El atacante escanea puertos abiertos en la red para identificar servicios vulnerables.
+Pasos de respuesta:
+1. Identificar la IP de origen del escaneo.
+2. Bloquear la IP en el firewall perimetral.
+3. Revisar logs de Suricata para confirmar el patrón de escaneo.
+4. Escalar al analista de nivel 2 si el escaneo es persistente.
+Severidad: Media
+
+PLAYBOOK-002: Respuesta a Fuerza Bruta SSH
+Táctica MITRE: TA0006 - Credential Access
+Técnica: T1110 - Brute Force
+Descripción: Múltiples intentos fallidos de autenticación SSH desde una misma IP.
+Pasos de respuesta:
+1. Verificar cantidad de intentos fallidos en los logs.
+2. Bloquear la IP origen temporalmente.
+3. Notificar al propietario de la cuenta atacada.
+4. Revisar si hubo algún intento exitoso posterior.
+Severidad: Alta
